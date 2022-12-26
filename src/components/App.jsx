@@ -3,8 +3,8 @@ import { AddContact } from './AddContact/AddContact';
 import { ShowContacts } from './ShowContacts/ShowContacts';
 import { Filter } from './Filter/Filter';
 import { Section } from './Section/Section';
-import { Title, SecondaryTitle } from './Section/Section.styled';
-
+import { Title } from './Titles/Title';
+import { SecondaryTitle } from './Titles/SecondaryTitle';
 import shortid from 'shortid';
 
 export class App extends Component {
@@ -25,20 +25,15 @@ export class App extends Component {
 
   handleDelete = id => {
     this.setState({
-      contacts: this.state.contacts.reduce((acc, contact) => {
-        contact.id !== id && acc.push(contact);
-        return acc;
-      }, []),
+      contacts: this.state.contacts.filter(contact => contact.id !== id),
     });
   };
 
   getVisibleContacts = () => {
     const { filter, contacts } = this.state;
-    const normalizedQuery = filter.toLocaleLowerCase();
-    return contacts.filter(
-      contact =>
-        contact.name.toLocaleLowerCase().includes(normalizedQuery) ||
-        contact.number.includes(filter)
+    const normalizedQuery = filter.toLowerCase();
+    return contacts.filter(contact =>
+      contact.name.toLowerCase().includes(normalizedQuery)
     );
   };
 
@@ -52,53 +47,32 @@ export class App extends Component {
     this.checkForDoubleContact(newContact);
   };
 
-  // checkForDoubleContact = newContact => {
-  //   const normalizedNewName = newContact.name.toLowerCase();
-
-  //   this.state.contacts.some(
-  //     contact => contact.name.toLowerCase() === normalizedNewName
-  //   )
-  //     ? alert(`${newContact.name} is already in your contacts`)
-  //     : this.setState(prevState => ({
-  //         contacts: [newContact, ...prevState.contacts],
-  //       }));
-  // };
-
   checkForDoubleContact = newContact => {
     const normalizedNewName = newContact.name.toLowerCase();
 
-    const hasTheSameName = this.state.contacts.some(
+    this.state.contacts.some(
       contact => contact.name.toLowerCase() === normalizedNewName
-    );
-
-    const hasTheSameNumber = this.state.contacts.some(
-      contact => contact.number === newContact.number
-    );
-
-    if (hasTheSameName) {
-      return alert(`${newContact.name} is already in your contacts!`);
-    }
-
-    if (hasTheSameNumber) {
-      return alert(`The user with this number is already in your contacts!`);
-    }
-
-    this.setState(prevState => ({
-      contacts: [newContact, ...prevState.contacts],
-    }));
+    )
+      ? alert(`${newContact.name} is already in your contacts`)
+      : this.setState(prevState => ({
+          contacts: [newContact, ...prevState.contacts],
+        }));
   };
 
   render() {
     return (
       <>
         <Section>
-          <Title>Phonebook</Title>
-          <AddContact contacts={this.contacts} addContact={this.addContact} />
+          <Title title="Phonebook" />
+          <AddContact addContact={this.addContact} />
         </Section>
 
         <Section>
-          <SecondaryTitle>Contacts</SecondaryTitle>
-          <Filter onChange={this.handleFilterChange} />
+          <SecondaryTitle title="Contacts" />
+          <Filter
+            onChange={this.handleFilterChange}
+            filter={this.state.filter}
+          />
           <ShowContacts
             contacts={this.getVisibleContacts()}
             onDelete={this.handleDelete}

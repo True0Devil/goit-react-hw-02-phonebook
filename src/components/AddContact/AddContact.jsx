@@ -1,17 +1,9 @@
 import { Component } from 'react';
 import { Form, Label, Input, Button } from './AddContact.styled';
 import PropTypes from 'prop-types';
-import { exact } from 'prop-types';
 
 export class AddContact extends Component {
   static propTypes = {
-    contacts: PropTypes.arrayOf(
-      exact({
-        id: PropTypes.string.isRequired,
-        name: PropTypes.string.isRequired,
-        number: PropTypes.string.isRequired,
-      })
-    ),
     addContact: PropTypes.func.isRequired,
   };
 
