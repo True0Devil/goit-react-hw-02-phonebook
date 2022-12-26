@@ -39,7 +39,7 @@ export class AddContact extends Component {
     const { name, number } = this.state;
     return (
       <Form action="" onSubmit={this.handleSubmit}>
-        <Label htmlFor="">
+        <Label>
           Name
           <Input
             type="text"
@@ -53,7 +53,7 @@ export class AddContact extends Component {
           />
         </Label>
 
-        <Label htmlFor="">
+        <Label>
           Phone number
           <Input
             type="tel"
