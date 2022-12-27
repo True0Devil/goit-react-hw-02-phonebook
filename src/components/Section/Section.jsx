@@ -1,7 +1,5 @@
 import { StyledSection } from './Section.styled';
-import { Title } from 'components/Titles/Titles.styled';
-import { SecondaryTitle } from 'components/Titles/Titles.styled';
-
+import { Title, SecondaryTitle } from 'components/Titles/Titles.styled';
 export const Section = ({ title, children }) => {
   return (
     <StyledSection>
