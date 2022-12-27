@@ -3,8 +3,6 @@ import { AddContact } from './AddContact/AddContact';
 import { ShowContacts } from './ShowContacts/ShowContacts';
 import { Filter } from './Filter/Filter';
 import { Section } from './Section/Section';
-import { Title } from './Titles/Title';
-import { SecondaryTitle } from './Titles/SecondaryTitle';
 import shortid from 'shortid';
 
 export class App extends Component {
@@ -62,13 +60,11 @@ export class App extends Component {
   render() {
     return (
       <>
-        <Section>
-          <Title title="Phonebook" />
+        <Section title="Phonebook">
           <AddContact addContact={this.addContact} />
         </Section>
 
-        <Section>
-          <SecondaryTitle title="Contacts" />
+        <Section title="Contacts">
           <Filter
             onChange={this.handleFilterChange}
             filter={this.state.filter}
